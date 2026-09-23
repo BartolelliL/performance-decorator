@@ -3,6 +3,12 @@ import asyncio
 from performance import performance
 
 
+def test_performance_has_ide_friendly_documentation():
+    assert "wrapped.last_duration" in performance.__doc__
+    assert "``" not in performance.__doc__
+    assert ":func:" not in performance.__doc__
+
+
 def test_performance_preserves_result_and_records_duration(capsys):
     @performance
     def add(left, right):

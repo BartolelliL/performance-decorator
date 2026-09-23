@@ -11,7 +11,7 @@ F = TypeVar("F", bound=Callable[..., Any])
 
 
 class Timing(NamedTuple):
-    """The data passed to ``on_complete`` after a decorated call."""
+    """The data passed to on_complete after a decorated call."""
 
     function_name: str
     duration: float
@@ -28,28 +28,28 @@ def performance(
 ) -> Any:
     """Measure a function with one simple, configurable decorator.
 
-    Use ``@performance`` for the defaults, or ``@performance(...)`` to
+    Use @performance for the defaults, or @performance(...) to
     customize it. Every duration is measured in seconds with
-    :func:`time.perf_counter`.
+    time.perf_counter.
 
     Args:
         history_size: Maximum number of durations kept in
-            ``wrapped.execution_times``. The default is ``1``. Set it to
-            ``0`` to disable history and keep only ``last_duration``.
+            wrapped.execution_times. The default is 1. Set it to
+            0 to disable history and keep only last_duration.
         log: A callable receiving the message printed after each call, such
-            as ``logger.info``. Use ``None`` to disable output.
-        on_complete: An optional callable receiving a ``Timing`` object after
-            every completed call. It includes ``function_name``, ``duration``,
-            ``succeeded``, and ``exception`` for sending metrics anywhere.
+            as logger.info. Use None to disable output.
+        on_complete: An optional callable receiving a Timing object after
+            every completed call. It includes function_name, duration,
+            succeeded, and exception for sending metrics anywhere.
 
     The wrapped function keeps its name, docstring, arguments, and return
-    value. Its latest duration is available as ``wrapped.last_duration``;
-    bounded history is available as ``wrapped.execution_times``. Timing is
-    recorded for failed calls too, and ``async def`` functions are supported.
+    value. Its latest duration is available as wrapped.last_duration;
+    bounded history is available as wrapped.execution_times. Timing is
+    recorded for failed calls too, and async def functions are supported.
 
     Example:
-        ``@performance(history_size=10, log=logger.info,
-        on_complete=save_metric)``
+        @performance(history_size=10, log=logger.info,
+        on_complete=save_metric)
     """
     if function is None:
         return lambda decorated: performance(
