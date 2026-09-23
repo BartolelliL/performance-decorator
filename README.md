@@ -27,6 +27,20 @@ print(calculate.last_duration)  # elapsed time in seconds
 print(calculate.execution_times)  # duration of every completed call
 ```
 
+For a customized but still simple setup:
+
+```python
+@performance(history_size=10, log=logger.info, on_complete=save_metric)
+def calculate():
+    return sum(range(100_000))
+```
+
+`history_size` bounds memory use (`1` by default; `0` disables history),
+`log` accepts any message handler (`None` disables output), and
+`on_complete` receives a `Timing` object containing the function name,
+duration, success status, and exception. The same decorator also supports
+`async def` functions.
+
 Each call prints a line such as:
 
 ```text
